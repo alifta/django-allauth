@@ -1,0 +1,12 @@
+[project]
+name = "auth-demo"
+version = "0.1.0"
+description = "Authentication Django project."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "Django>=6.0",
+    "djangorestframework>=3.16",
+    "django-htmx>=1.27",
+    "django-allauth[mfa,socialaccount]>=65.13",
+]
