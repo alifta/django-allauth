@@ -1,5 +1,5 @@
 from django import forms
-from core.models import UserProfile
+from core.models import Todo, UserProfile
 
 
 class CustomSignupForm(forms.Form):
@@ -42,3 +42,9 @@ class CustomSignupForm(forms.Form):
         profile.birth_date = self.cleaned_data.get("birth_date", None)
         profile.save()
         return user
+
+
+class TodoForm(forms.ModelForm):
+    class Meta:
+        model = Todo
+        fields = ["description", "is_completed"]

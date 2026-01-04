@@ -5,21 +5,59 @@
 {% comment %} {% include 'core/partials/navbar.html' %} {% endcomment %}
 
 {% block title %}
-  Home
+Home
 {% endblock %}
 
 {% block content %}
-  <h2>Landing Page</h2>
-  <div>Welcome to the Django Allauth Demo Application.</div>
+<div class="container mx-auto px-4 py-8">
 
-  {% if not user.is_authenticated %}
-    <h2>Getting Started</h2>
-    <a href="{% provider_login_url 'google' next='/secret' %}" class="google-signin-btn">
-      <img src="{% static 'img/google-icon.svg' %}" alt="Google" class="google-icon">
-      <span class="google-text">Sign in with Google</span>
-    </a>
-  {% else %}
-    <h3>Welcome back, {{ user.get_full_name }}!</h3>
-    <a href="{% url 'core:secret' %}" class="btn-primary">Go to Secret Page</a>
-  {% endif %}
+  <!-- Hero Section -->
+  <div class="hero min-h-[60vh] bg-base-200 rounded-lg mb-8">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Home In Block</h1>
+        <p class="py-6">Welcome to our platform. Get started by signing in or explore our products below.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Section -->
+  <div class="card bg-base-100 shadow-xl mb-8">
+    <div class="card-body">
+      <h2 class="card-title text-3xl mb-4">Products</h2>
+
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full" id="product-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>101</td>
+              <td>Product A</td>
+            </tr>
+            <tr>
+              <td>102</td>
+              <td>Product B</td>
+            </tr>
+            <tr>
+              <td>103</td>
+              <td>Product C</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card-actions justify-end mt-4">
+        <button class="btn btn-primary" hx-get="/about">Get more</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 {% endblock %}

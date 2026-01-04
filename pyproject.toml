@@ -1,12 +1,45 @@
+# Project metadata and configuration
 [project]
 name = "auth-demo"
 version = "0.1.0"
 description = "Authentication Django project."
 readme = "README.md"
+# Minimum Python version required for this project
 requires-python = ">=3.14"
+
+# Core runtime dependencies
 dependencies = [
-    "Django>=6.0",
-    "djangorestframework>=3.16",
-    "django-htmx>=1.27",
-    "django-allauth[mfa,socialaccount]>=65.13",
+    "Django>=6.0",                                    # Web framework
+    "djangorestframework>=3.16",                     # REST API toolkit
+    "django-htmx>=1.27",                              # HTMX integration for Django
+    "django-allauth[mfa,socialaccount]>=65.13",      # Authentication with MFA and social providers
+    "django-extensions>=4.1",                         # Additional Django management commands
+    "ruff>=0.14.0",  # Fast Python linter and formatter
+    "django-widget-tweaks>=1.5.1",
+    "django-template-partials>=25.3",
 ]
+
+# Ruff configuration for code quality and formatting
+[tool.ruff]
+# Maximum line length (matches Black's default)
+line-length = 88
+# Target Python version for syntax checking and upgrades
+target-version = "py314"
+
+# Linting rules configuration
+[tool.ruff.lint]
+# Enable specific rule sets
+select = [
+    "E",   # pycodestyle errors (PEP 8 style guide violations)
+    "F",   # pyflakes (logical errors and unused imports)
+    "I",   # isort (import sorting and organization)
+    "DJ",  # flake8-django (Django-specific best practices)
+    "UP",  # pyupgrade (automatic Python syntax upgrades)
+]
+# Ignore line-length errors (E501) - let the formatter handle line wrapping
+ignore = ["E501"]
+
+# Code formatting configuration
+[tool.ruff.format]
+# Use double quotes for strings (can be changed to "single" if preferred)
+quote-style = "double"

@@ -1,3 +1,8 @@
-/.venv
-/db.sqlite3
-/uv.lock
+*.pyc
+__pycache__
+db.sqlite3
+notes*.txt
+uv.lock
+.venv
+node_modules/
+static/css/main.css
