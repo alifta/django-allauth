@@ -8,7 +8,7 @@ requires-python = ">=3.14"
 
 # Core runtime dependencies
 dependencies = [
-    "Django>=6.0",                                    # Web framework
+    "Django>=6.0",                                   # Web framework
     "django-allauth[mfa,socialaccount]>=65.13",      # Authentication with MFA and social providers
     "django-cors-headers>=4.9.0",                    # CORS headers support
     "django-extensions>=4.1",                        # Additional Django management commands
@@ -28,7 +28,7 @@ dev = [
 # Ruff configuration for code quality and formatting
 [tool.ruff]
 line-length = 88                                     # Maximum line length (matches Black's default)
-target-version = "py314"                            # Target Python version for syntax checking
+target-version = "py314"                             # Target Python version for syntax checking
 
 [tool.ruff.lint]
 # Enable specific rule sets
@@ -67,14 +67,5 @@ ignore = [
     "D031",  # Ignore inline JavaScript
 ]
 
-# Allow common Django template syntax
-custom_blocks = [
-    "block",
-    "endblock",
-    "extends",
-    "include",
-    "load",
-    "static",
-    "url",
-    "csrf_token",
-]
+# Allow common Django template syntax (comma-separated string)
+custom_blocks = "block,endblock,extends,include,load,static,url,csrf_token"

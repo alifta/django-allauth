@@ -1,7 +1,16 @@
-{% extends 'base.html' %} {% load socialaccount %} {% load static %} {% block title %} About {%
-endblock %} {% block content %}
-<h1>About Us</h1>
+{% extends 'base.html' %}
+  {% load socialaccount %}
 
-<p style="color: blue">This paragraph contains some text about our site ...</p>
+    {% load static %}
 
-{% endblock %}
+      {% block title %}
+
+        About {%
+        endblock %}
+        {% block content %}
+
+          <h1>About Us</h1>
+
+          <p style="color: blue">This paragraph contains some text about our site ...</p>
+
+        {% endblock %}

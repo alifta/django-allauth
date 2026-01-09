@@ -1,185 +1,169 @@
-{% extends 'base.html' %} {% load socialaccount %} {% load static %} {% block title %} Home {%
-endblock %} {% block content %}
-<div
-  class="container mx-auto px-4 py-8"
-  {%
-  if
-  user.is_authenticated
-  %}data-user-authenticated="true"
-  {%
-  endif
-  %}
->
-  <!-- Hero Section -->
-  <div class="hero min-h-[60vh] bg-base-200 rounded-lg mb-8">
-    <div class="hero-content text-center">
-      <div class="max-w-md">
-        <h1 class="text-5xl font-bold">Home In Block</h1>
+{% extends 'base.html' %}
+  {% load socialaccount %}
 
-        <p
-          class="py-6"
-          id="home-description"
-        >
-          {% if user.is_authenticated %} Welcome back, {{ user.username }}! You're ready to use our
-          API. {% else %} Welcome to our platform. Get started by signing in or explore our products
-          below. {% endif %}
-        </p>
+    {% load static %}
 
-        <div class="flex gap-2 justify-center">
-          <a
-            class="btn btn-primary"
-            hx-get="{% url 'core:about' %}"
-            hx-target="#home-description"
-          >
-            About Us
-          </a>
+      {% block title %}
 
-          {% if user.is_authenticated %}
-          <button
-            class="btn btn-secondary"
-            onclick="fetchAndStoreToken()"
-          >
-            Connect API
-          </button>
-          <span
-            id="token-status"
-            class="badge badge-ghost"
-          ></span>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-  </div>
+        Home {%
+        endblock %}
+        {% block content %}
 
-  <!-- Products Section -->
-  <div class="card bg-base-100 shadow-xl mb-8">
-    <div class="card-body">
-      <h2 class="card-title text-3xl mb-4">Products</h2>
+          <div
+            class="container mx-auto px-4 py-8"
+            {%
+            if
+            user.is_authenticated
+            %}data-user-authenticated="true"
+            {%
+            endif
+            %}
+            >
+            <!-- Hero Section -->
+            <div class="hero min-h-[60vh] bg-base-200 rounded-lg mb-8">
+              <div class="hero-content text-center">
+                <div class="max-w-md">
+                  <h1 class="text-5xl font-bold">Home In Block</h1>
 
-      <div class="overflow-x-auto">
-        <table
-          class="table table-zebra w-full"
-          id="product-table"
-        >
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>101</td>
-              <td>Product A</td>
-            </tr>
-            <tr>
-              <td>102</td>
-              <td>Product B</td>
-            </tr>
-            <tr>
-              <td>103</td>
-              <td>Product C</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                  <p class="py-6" id="home-description">
+                    {% if user.is_authenticated %}
+                      Welcome back, {{ user.username }}! You're ready to use our
+                      API.
+                    {% else %}
+                      Welcome to our platform. Get started by signing in or explore our products
+                      below.
+                    {% endif %}
+                  </p>
 
-      <div class="card-actions justify-end mt-4">
-        <button
-          class="btn btn-primary"
-          hx-get="/about"
-        >
-          Get more
-        </button>
-      </div>
+                  <div class="flex gap-2 justify-center">
+                    <a class="btn btn-primary"
+                       hx-get="{% url 'core:about' %}"
+                       hx-target="#home-description">About Us</a>
 
-      <form style="margin-top: 24px">
-        <label for="product">Product</label>
-        <input
-          type="text"
-          name="product"
-          id="product"
-          class="input input-bordered"
-        />
-        <input
-          type="submit"
-          value="submit"
-          class="btn btn-primary mt-2"
-        />
-      </form>
-    </div>
-  </div>
-</div>
+                    {% if user.is_authenticated %}
+                      <button class="btn btn-secondary" onclick="fetchAndStoreToken()">Connect API</button>
+                      <span id="token-status" class="badge badge-ghost"></span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-{% endblock %} {% block extra_js %}
-<script>
-  // Function to fetch JWT token from session authentication
-  async function fetchAndStoreToken() {
-    const statusBadge = document.getElementById("token-status");
-    const connectButton = event.target;
+            <!-- Products Section -->
+            <div class="card bg-base-100 shadow-xl mb-8">
+              <div class="card-body">
+                <h2 class="card-title text-3xl mb-4">Products</h2>
 
-    try {
-      connectButton.disabled = true;
-      connectButton.classList.add("loading");
-      statusBadge.textContent = "Connecting...";
-      statusBadge.classList.add("badge-warning");
+                <div class="overflow-x-auto">
+                  <table class="table table-zebra w-full" id="product-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>101</td>
+                        <td>Product A</td>
+                      </tr>
+                      <tr>
+                        <td>102</td>
+                        <td>Product B</td>
+                      </tr>
+                      <tr>
+                        <td>103</td>
+                        <td>Product C</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-      // Get CSRF token from cookie
-      const csrfToken = "{{ csrf_token }}";
+                <div class="card-actions justify-end mt-4">
+                  <button class="btn btn-primary" hx-get="/about">Get more</button>
+                </div>
 
-      const response = await fetch("/api/token/from-session/", {
-        method: "POST",
-        headers: {
-          "X-CSRFToken": csrfToken,
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // Include cookies for session auth
-      });
+                <form style="margin-top: 24px">
+                  <label for="product">Product</label>
+                  <input type="text" name="product" id="product" class="input input-bordered" />
+                  <input type="submit" value="submit" class="btn btn-primary mt-2" />
+                </form>
+              </div>
+            </div>
+          </div>
 
-      if (!response.ok) {
-        throw new Error("Failed to obtain API token");
-      }
+        {% endblock %}
 
-      const data = await response.json();
+        {% block extra_js %}
 
-      // Store tokens using the auth.js functions
-      setAuthToken(data.access, data.refresh);
+          <script>
+              // Function to fetch JWT token from session authentication
+              async function fetchAndStoreToken() {
+                  const statusBadge = document.getElementById("token-status");
+                  const connectButton = event.target;
 
-      statusBadge.textContent = "API Connected ✓";
-      statusBadge.classList.remove("badge-warning");
-      statusBadge.classList.add("badge-success");
+                  try {
+                      connectButton.disabled = true;
+                      connectButton.classList.add("loading");
+                      statusBadge.textContent = "Connecting...";
+                      statusBadge.classList.add("badge-warning");
 
-      connectButton.textContent = "API Connected";
-      connectButton.classList.remove("btn-secondary");
-      connectButton.classList.add("btn-success");
+                      // Get CSRF token from cookie
+                      const csrfToken = "{{ csrf_token }}";
 
-      console.log("JWT token successfully obtained and stored");
-    } catch (error) {
-      console.error("Error fetching token:", error);
-      statusBadge.textContent = "Connection Failed";
-      statusBadge.classList.remove("badge-warning");
-      statusBadge.classList.add("badge-error");
+                      const response = await fetch("/api/token/from-session/", {
+                          method: "POST",
+                          headers: {
+                              "X-CSRFToken": csrfToken,
+                              "Content-Type": "application/json",
+                          },
+                          credentials: "include", // Include cookies for session auth
+                      });
 
-      connectButton.disabled = false;
-      connectButton.classList.remove("loading");
-    }
-  }
+                      if (!response.ok) {
+                          throw new Error("Failed to obtain API token");
+                      }
 
-  // Check token status on page load
-  document.addEventListener("DOMContentLoaded", function () {
-    const statusBadge = document.getElementById("token-status");
-    const connectButton = document.querySelector('[onclick="fetchAndStoreToken()"]');
+                      const data = await response.json();
 
-    if (statusBadge && isAuthenticated()) {
-      statusBadge.textContent = "API Connected ✓";
-      statusBadge.classList.add("badge-success");
+                      // Store tokens using the auth.js functions
+                      setAuthToken(data.access, data.refresh);
 
-      if (connectButton) {
-        connectButton.textContent = "API Connected";
-        connectButton.classList.remove("btn-secondary");
-        connectButton.classList.add("btn-success");
-      }
-    }
-  });
-</script>
-{% endblock %}
+                      statusBadge.textContent = "API Connected ✓";
+                      statusBadge.classList.remove("badge-warning");
+                      statusBadge.classList.add("badge-success");
+
+                      connectButton.textContent = "API Connected";
+                      connectButton.classList.remove("btn-secondary");
+                      connectButton.classList.add("btn-success");
+
+                      console.log("JWT token successfully obtained and stored");
+                  } catch (error) {
+                      console.error("Error fetching token:", error);
+                      statusBadge.textContent = "Connection Failed";
+                      statusBadge.classList.remove("badge-warning");
+                      statusBadge.classList.add("badge-error");
+
+                      connectButton.disabled = false;
+                      connectButton.classList.remove("loading");
+                  }
+              }
+
+              // Check token status on page load
+              document.addEventListener("DOMContentLoaded", function() {
+                  const statusBadge = document.getElementById("token-status");
+                  const connectButton = document.querySelector('[onclick="fetchAndStoreToken()"]');
+
+                  if (statusBadge && isAuthenticated()) {
+                      statusBadge.textContent = "API Connected ✓";
+                      statusBadge.classList.add("badge-success");
+
+                      if (connectButton) {
+                          connectButton.textContent = "API Connected";
+                          connectButton.classList.remove("btn-secondary");
+                          connectButton.classList.add("btn-success");
+                      }
+                  }
+              });
+          </script>
+        {% endblock %}
