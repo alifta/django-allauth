@@ -6,7 +6,7 @@
  * @returns {string|null} JWT access token or null if not found
  */
 function getAuthToken() {
-  return localStorage.getItem('access_token');
+  return localStorage.getItem("access_token");
 }
 
 /**
@@ -15,16 +15,16 @@ function getAuthToken() {
  * @param {string} refreshToken - JWT refresh token
  */
 function setAuthToken(accessToken, refreshToken) {
-  localStorage.setItem('access_token', accessToken);
-  localStorage.setItem('refresh_token', refreshToken);
+  localStorage.setItem("access_token", accessToken);
+  localStorage.setItem("refresh_token", refreshToken);
 }
 
 /**
  * Remove JWT tokens from localStorage
  */
 function clearAuthToken() {
-  localStorage.removeItem('access_token');
-  localStorage.removeItem('refresh_token');
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
 }
 
 /**
@@ -35,23 +35,23 @@ function clearAuthToken() {
  */
 async function fetchJWTToken(username, password) {
   try {
-    const response = await fetch('/api/token/', {
-      method: 'POST',
+    const response = await fetch("/api/token/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
     });
 
     if (!response.ok) {
-      throw new Error('Failed to obtain token');
+      throw new Error("Failed to obtain token");
     }
 
     const data = await response.json();
     setAuthToken(data.access, data.refresh);
     return data;
   } catch (error) {
-    console.error('Error fetching JWT token:', error);
+    console.error("Error fetching JWT token:", error);
     throw error;
   }
 }
@@ -61,17 +61,17 @@ async function fetchJWTToken(username, password) {
  * @returns {Promise<Object>} New token response
  */
 async function refreshJWTToken() {
-  const refreshToken = localStorage.getItem('refresh_token');
+  const refreshToken = localStorage.getItem("refresh_token");
 
   if (!refreshToken) {
-    throw new Error('No refresh token available');
+    throw new Error("No refresh token available");
   }
 
   try {
-    const response = await fetch('/api/token/refresh/', {
-      method: 'POST',
+    const response = await fetch("/api/token/refresh/", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ refresh: refreshToken }),
     });
@@ -79,14 +79,14 @@ async function refreshJWTToken() {
     if (!response.ok) {
       // If refresh fails, clear tokens and redirect to login
       clearAuthToken();
-      throw new Error('Failed to refresh token');
+      throw new Error("Failed to refresh token");
     }
 
     const data = await response.json();
-    localStorage.setItem('access_token', data.access);
+    localStorage.setItem("access_token", data.access);
     return data;
   } catch (error) {
-    console.error('Error refreshing JWT token:', error);
+    console.error("Error refreshing JWT token:", error);
     throw error;
   }
 }
@@ -100,20 +100,20 @@ function isAuthenticated() {
 }
 
 // Configure HTMX to automatically include JWT token in all API requests
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Add Authorization header to all HTMX requests to /api/
-  document.body.addEventListener('htmx:configRequest', function(event) {
+  document.body.addEventListener("htmx:configRequest", function (event) {
     const token = getAuthToken();
 
     // Only add token for API requests
-    if (event.detail.path.startsWith('/api/') && token) {
-      event.detail.headers['Authorization'] = `Bearer ${token}`;
+    if (event.detail.path.startsWith("/api/") && token) {
+      event.detail.headers["Authorization"] = `Bearer ${token}`;
     }
   });
 
   // Handle 401 responses (unauthorized) - attempt to refresh token
-  document.body.addEventListener('htmx:responseError', async function(event) {
-    if (event.detail.xhr.status === 401 && event.detail.pathInfo.requestPath.startsWith('/api/')) {
+  document.body.addEventListener("htmx:responseError", async function (event) {
+    if (event.detail.xhr.status === 401 && event.detail.pathInfo.requestPath.startsWith("/api/")) {
       try {
         // Try to refresh the token
         await refreshJWTToken();
@@ -126,14 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
             target: event.detail.target,
             swap: event.detail.pathInfo.swap,
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
         }
       } catch (error) {
-        console.error('Token refresh failed:', error);
+        console.error("Token refresh failed:", error);
         // Redirect to login if token refresh fails
-        window.location.href = '/accounts/login/';
+        window.location.href = "/accounts/login/";
       }
     }
   });
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Automatically fetch token when user logs in via Django allauth
 // This looks for a successful login and fetches JWT token
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Check if we're on a page after successful login
   // You can customize this based on your needs
   const isLoggedIn = document.querySelector('[data-user-authenticated="true"]');
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (isLoggedIn && !isAuthenticated()) {
     // User is logged in via session but doesn't have JWT token
     // You'll need to implement a view that converts session auth to JWT
-    console.log('User is authenticated but no JWT token found');
+    console.log("User is authenticated but no JWT token found");
     // Option: Show a message or button to "Connect to API"
   }
 });

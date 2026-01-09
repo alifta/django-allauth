@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+
+# Build outputs
+static/css/main.css
+*.min.js
+*.min.css
+
+# Lock files
+package-lock.json
+bun.lock
+yarn.lock
+
+# Generated files
+*.pyc
+*.pyo
+db.sqlite3

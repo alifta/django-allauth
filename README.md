@@ -1,12 +1,101 @@
 # Home in Block
 
-## Database
+## Project Setup
+
+Install `uv` (if not already installed):
+
+```sh
+brew install uv
+```
+
+Creates virtual environment and installs or sync dependency packages:
+
+```sh
+uv sync
+```
+
+This will:
+
+- Create a virtual environment (if it doesn't exist)
+- Install all dependencies from `pyproject.toml`
+- Use Python 3.14+ (automatically downloaded if needed)
+
+Activate the virtual environment (optional, but recommended for interactive use):
+
+```sh
+source .venv/bin/activate
+```
+
+Note: If virtual environment is activated, you can run commands normally, but you can also run commands directly with `uv run` without activating the environment:
+
+```sh
+python manage.py runserver
+# OR
+uv run python manage.py runserver
+```
+
+Note: You can also run commands directly with `uv run` without activating the environment.
+
+## Managing Dependencies
+
+Add a new dependency:
+
+```sh
+uv add <package-name>
+```
+
+Add a development dependency:
+
+```sh
+uv add --dev <package-name>
+```
+
+Remove a dependency:
+
+```sh
+uv remove <package-name>
+```
+
+Update all dependencies:
+
+```sh
+uv sync --upgrade
+```
+
+## Django Commands
+
+All Django commands should be prefixed with `uv run`:
+
+Run development server:
+
+```sh
+uv run python manage.py runserver
+```
+
+Create superuser:
+
+```sh
+uv run python manage.py createsuperuser
+```
+
+Run Django shell:
+
+```sh
+uv run python manage.py shell
+```
+
+## Database Commands
 
 Run migrations:
 
 ```sh
-uv run python manage.py makemigrations
 uv run python manage.py migrate
+```
+
+Create migrations:
+
+```sh
+uv run python manage.py makemigrations
 ```
 
 ## UI
@@ -63,3 +152,33 @@ Format all Python files:
 uv run ruff check --fix .
 uv run ruff format .
 ```
+
+## Django Template Formatting
+
+This project uses **DjLint** for formatting Django templates. DjLint properly handles Django template tags and ensures each tag is on its own line.
+
+Format a specific template file:
+
+```sh
+uv run djlint --reformat path/to/template.html
+```
+
+Format all templates in a directory:
+
+```sh
+uv run djlint --reformat core/templates/
+```
+
+Format all templates in the project:
+
+```sh
+uv run djlint --reformat templates/ core/templates/
+```
+
+Check formatting without making changes:
+
+```sh
+uv run djlint --check templates/ core/templates/
+```
+
+**Note**: DjLint is configured in `pyproject.toml` and will automatically format Django template tags, HTMX attributes, and HTML content.

@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods, require_POST
 
 from core.forms import TodoForm
-from core.models import Todo
+from core.models import Todo, Transaction
 
 
 def index(request):
@@ -32,6 +32,12 @@ def todo(request):
         "form": TodoForm(),
     }
     return render(request, "core/todo.html", context)
+
+
+def transactions(request):
+    count = Transaction.objects.count()
+    context = {"count": count}
+    return render(request, "core/transactions.html", context)
 
 
 @login_required

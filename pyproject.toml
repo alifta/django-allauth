@@ -45,3 +45,27 @@ ignore = ["E501"]
 [tool.ruff.format]
 # Use double quotes for strings (can be changed to "single" if preferred)
 quote-style = "double"
+
+# DjLint configuration for Django template formatting
+[tool.djlint]
+# Use Django profile for Django templates
+profile = "django"
+# Indentation settings (2 spaces)
+indent = 2
+# Use tabs or spaces (false = spaces)
+use_gitignore = true
+# Format HTML attributes
+format_html = true
+# Format CSS
+format_css = true
+# Format JavaScript
+format_js = true
+# Maximum line length
+max_line_length = 120
+# Preserve blank lines
+preserve_blank_lines = true
+
+[dependency-groups]
+dev = [
+    "djlint>=1.36.4",
+]
