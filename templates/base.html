@@ -4,56 +4,71 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="{% block meta_description %}
-       {% endblock %}" />
+    <meta name="description" content=" 
+      {% block meta_description %}
+  
+      {% endblock %}" />
       <meta name="referrer" content="strict-origin-when-cross-origin" />
 
       <title>
-        {% block title %}Home In Block{% endblock %}
+
+        {% block title %}
+
+          Home In Block
+
+        {% endblock %}
       </title>
 
       {% load static %}
 
-        <!-- Preconnect to CDN for HTMX -->
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+      <!-- Preconnect to CDN for HTMX -->
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
-        <!-- Built CSS - Includes Tailwind CSS and DaisyUI from local config -->
-        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+      <!-- Built CSS - Includes Tailwind CSS and DaisyUI from local config -->
+      <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
-        <!-- DaisyUI CSS - Base styles and themes -->
-        <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      <!-- DaisyUI CSS - Base styles and themes -->
+      <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5"
        rel="stylesheet"
        type="text/css" /> -->
-        <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
        rel="stylesheet"
        type="text/css" /> -->
 
-        <!-- JavaScript - Load with defer to prevent blocking -->
-        <!-- Tailwind CSS Browser (DaisyUI dependency) - Must load before Tailwind CSS -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" defer></script> -->
+      <!-- JavaScript - Load with defer to prevent blocking -->
+      <!-- Tailwind CSS Browser (DaisyUI dependency) - Must load before Tailwind CSS -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" defer></script> -->
 
-        <!-- Tailwind CSS with plugins: typography -->
-        <!-- <script src="https://cdn.tailwindcss.com?plugins=typography" defer></script> -->
+      <!-- Tailwind CSS with plugins: typography -->
+      <!-- <script src="https://cdn.tailwindcss.com?plugins=typography" defer></script> -->
 
-        <!-- HTMX - Using CDN with integrity check -->
-        <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
-                integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
-                crossorigin="anonymous"
-                defer></script>
+      <!-- HTMX - Using CDN with integrity check -->
+      <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
+              integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
+              crossorigin="anonymous"
+              defer></script>
 
-        <!-- JWT Authentication Script -->
-        <script src="{% static 'js/auth.js' %}" defer></script>
+      <!-- JWT Authentication Script -->
+      <script src="{% static 'js/auth.js' %}" defer></script>
 
-        {% block extra_head %}{% endblock %}
-      </head>
+      {% block extra_head %}
 
-      <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        {% include 'components/_navbar.html' %}
+      {% endblock %}
+    </head>
 
-          <main id="main-content">
-            {% block content %}{% endblock %}
-          </main>
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-          {% block extra_js %}{% endblock %}
-        </body>
-      </html>
+      {% include 'components/_navbar.html' %}
+
+      <main id="main-content">
+
+        {% block content %}
+
+        {% endblock %}
+      </main>
+
+      {% block extra_js %}
+
+      {% endblock %}
+    </body>
+  </html>

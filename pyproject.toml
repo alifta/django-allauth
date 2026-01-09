@@ -21,17 +21,16 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "djlint>=1.36.4",                                # Django template linter
+    "djlint>=1.36.4",                                # Django template linter and formatter
     "ruff>=0.14.0",                                  # Fast Python linter and formatter
 ]
 
-# Ruff configuration for code quality and formatting
+# Ruff
 [tool.ruff]
 line-length = 88                                     # Maximum line length (matches Black's default)
 target-version = "py314"                             # Target Python version for syntax checking
 
 [tool.ruff.lint]
-# Enable specific rule sets
 select = [
     "E",   # pycodestyle errors (PEP 8 style guide violations)
     "F",   # pyflakes (logical errors and unused imports)
@@ -39,33 +38,25 @@ select = [
     "DJ",  # flake8-django (Django-specific best practices)
     "UP",  # pyupgrade (automatic Python syntax upgrades)
 ]
-# Ignore line-length errors (E501) - let the formatter handle line wrapping
-ignore = ["E501"]
+ignore = ["E501"]                                    # Ignore line-length errors
 
 [tool.ruff.format]
-quote-style = "double"                              # Use double quotes for strings
+quote-style = "double"                               # Use double quotes for strings
 
-# DjLint configuration for Django template formatting
+# DjLint
 [tool.djlint]
-profile = "django"                                  # Use Django profile for Django templates
-indent = 2                                          # Indentation settings (2 spaces)
-use_gitignore = true                                # Respect .gitignore files
-format_html = true                                  # Format HTML attributes
-format_css = true                                   # Format CSS
-format_js = true                                    # Format JavaScript
-max_line_length = 120                               # Maximum line length
-preserve_blank_lines = true                         # Preserve blank lines
-blank_line_after_tag = "block"                     # Add blank lines after block tags
-format_template_tags = false                        # Prevent aggressive formatting of template tags
-wrap_attributes = "auto"                            # Keep attribute wrapping readable
-close_void_tags = true                              # Improve diff stability in CI
-
-# Do not reformat Django template tags that are commonly broken by linters
-ignore = [
-    "D018",  # Ignore missing end tags (Django blocks)
-    "D019",  # Ignore invalid attribute names (hx-, x-data, etc.)
-    "D031",  # Ignore inline JavaScript
-]
-
-# Allow common Django template syntax (comma-separated string)
-custom_blocks = "block,endblock,extends,include,load,static,url,csrf_token"
+profile = "django"                                   # Use Django profile for Django templates
+indent = 2                                           # Indentation settings (2 spaces)
+use_gitignore = true                                 # Respect .gitignore files
+format_html = true                                   # Format HTML attributes
+format_css = true                                    # Format CSS
+format_js = true                                     # Format JavaScript
+max_line_length = 120                                # Maximum line length
+preserve_blank_lines = true                          # Preserve blank lines
+max_blank_lines = 1                                  # Maximum blank lines
+blank_line_after_tag = "load,extends,include,block"  # Add blank lines after specified tags
+blank_line_before_tag = "load,extends,include,block,endblock"  # Add blank lines before specified tags
+line_break_after_multiline_tag = true                # Break line after multiline tags
+close_void_tags = true                               # Improve diff stability in CI
+exclude = ".venv"                                    # Exclude directories from formatting
+format_attribute_template_tags = true                # Format template tags in attributes
