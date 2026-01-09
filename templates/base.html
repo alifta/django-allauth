@@ -34,10 +34,15 @@
     integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"
     defer></script>
 
+  <!-- JWT Authentication Script -->
+  <script src="{% static 'js/auth.js' %}" defer></script>
+
   {% block extra_head %}{% endblock %}
 </head>
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  {% include 'components/_navbar.html' %}
+
   <main id="main-content">
     {% block content %}
     {% endblock %}

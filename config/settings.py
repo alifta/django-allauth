@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,12 +28,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Local apps
     "core",
+    "api",
     # Third-party apps
     "django_extensions",
     "rest_framework",
     "django_htmx",
     "widget_tweaks",
     "template_partials",
+    "corsheaders",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -168,3 +172,106 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+
+# Django REST Framework configuration
+# Configures authentication and permissions for all API endpoints
+REST_FRAMEWORK = {
+    # Authentication classes tried in order until one succeeds
+    # JWTAuthentication: Validates Bearer tokens in Authorization header
+    # SessionAuthentication: Falls back to Django session auth (useful for browsable API)
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    # Default permission for all API views (can be overridden per view)
+    # IsAuthenticated: Requires user to be logged in (via token or session)
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+# JWT (JSON Web Token) settings for djangorestframework-simplejwt
+# Tokens are obtained via POST /api/token/ with username and password
+SIMPLE_JWT = {
+    # How long access tokens remain valid (used for API requests)
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    # How long refresh tokens remain valid (used to get new access tokens)
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    # If True, issuing a new refresh token invalidates the old one
+    "ROTATE_REFRESH_TOKENS": False,
+    # If True, old refresh tokens are added to blacklist after rotation
+    "BLACKLIST_AFTER_ROTATION": False,
+    # If True, updates user.last_login when token is obtained
+    "UPDATE_LAST_LOGIN": False,
+    # Cryptographic algorithm used to sign tokens
+    "ALGORITHM": "HS256",
+    # Secret key used to sign tokens (uses Django SECRET_KEY)
+    "SIGNING_KEY": SECRET_KEY,
+    # Public key for verifying tokens (None for symmetric algorithms like HS256)
+    "VERIFYING_KEY": None,
+    # Expected audience claim in token (None = not validated)
+    "AUDIENCE": None,
+    # Expected issuer claim in token (None = not validated)
+    "ISSUER": None,
+    # URL to fetch JSON Web Key Set (None = not used)
+    "JWK_URL": None,
+    # Time leeway for token expiration validation
+    "LEEWAY": 0,
+    # Authorization header prefix (e.g., "Bearer <token>")
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    # HTTP header name containing the token
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    # User model field used as unique identifier
+    "USER_ID_FIELD": "id",
+    # JWT claim name that stores the user ID
+    "USER_ID_CLAIM": "user_id",
+    # Rule for authenticating users from token claims
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+    # Token class used for access tokens
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    # JWT claim name that stores the token type
+    "TOKEN_TYPE_CLAIM": "token_type",
+    # Class used to represent authenticated user from token
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+    # JWT claim name for unique token identifier (used for blacklisting)
+    "JTI_CLAIM": "jti",
+    # JWT claim name for sliding token refresh expiration
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    # Lifetime of sliding tokens (if using sliding tokens)
+    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
+    # Refresh token lifetime for sliding tokens
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+}
+
+# CORS Configuration for Angular frontend
+# Allows Angular dev server (http://localhost:4200) to make requests to Django API
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
+
+# Allow credentials (cookies, authorization headers, etc.)
+CORS_ALLOW_CREDENTIALS = True
+
+# Allow specific HTTP methods
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+# Allow specific headers
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]

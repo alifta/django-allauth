@@ -2,23 +2,39 @@
 {% load socialaccount %}
 {% load static %}
 
-{% comment %} {% include 'core/partials/navbar.html' %} {% endcomment %}
-
 {% block title %}
 Home
 {% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8" {% if user.is_authenticated %}data-user-authenticated="true"{% endif %}>
 
   <!-- Hero Section -->
   <div class="hero min-h-[60vh] bg-base-200 rounded-lg mb-8">
     <div class="hero-content text-center">
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Home In Block</h1>
-        <p class="py-6">Welcome to our platform. Get started by signing in or explore our products below.</p>
 
+        <p class="py-6" id="home-description">
+          {% if user.is_authenticated %}
+            Welcome back, {{ user.username }}! You're ready to use our API.
+          {% else %}
+            Welcome to our platform. Get started by signing in or explore our products below.
+          {% endif %}
+        </p>
+
+        <div class="flex gap-2 justify-center">
+          <a class="btn btn-primary" hx-get="{% url 'core:about' %}" hx-target="#home-description">About Us</a>
+
+          {% if user.is_authenticated %}
+            <button class="btn btn-secondary" onclick="fetchAndStoreToken()">
+              Connect API
+            </button>
+            <span id="token-status" class="badge badge-ghost"></span>
+          {% endif %}
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -55,9 +71,90 @@ Home
       <div class="card-actions justify-end mt-4">
         <button class="btn btn-primary" hx-get="/about">Get more</button>
       </div>
+
+      <form style="margin-top: 24px">
+        <label for="product">Product</label>
+        <input type="text" name="product" id="product" class="input input-bordered" />
+        <input type="submit" value="submit" class="btn btn-primary mt-2" />
+      </form>
+
+
     </div>
   </div>
 
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Function to fetch JWT token from session authentication
+  async function fetchAndStoreToken() {
+    const statusBadge = document.getElementById('token-status');
+    const connectButton = event.target;
+
+    try {
+      connectButton.disabled = true;
+      connectButton.classList.add('loading');
+      statusBadge.textContent = 'Connecting...';
+      statusBadge.classList.add('badge-warning');
+
+      // Get CSRF token from cookie
+      const csrfToken = '{{ csrf_token }}';
+
+      const response = await fetch('/api/token/from-session/', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': csrfToken,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for session auth
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to obtain API token');
+      }
+
+      const data = await response.json();
+
+      // Store tokens using the auth.js functions
+      setAuthToken(data.access, data.refresh);
+
+      statusBadge.textContent = 'API Connected ✓';
+      statusBadge.classList.remove('badge-warning');
+      statusBadge.classList.add('badge-success');
+
+      connectButton.textContent = 'API Connected';
+      connectButton.classList.remove('btn-secondary');
+      connectButton.classList.add('btn-success');
+
+      console.log('JWT token successfully obtained and stored');
+    } catch (error) {
+      console.error('Error fetching token:', error);
+      statusBadge.textContent = 'Connection Failed';
+      statusBadge.classList.remove('badge-warning');
+      statusBadge.classList.add('badge-error');
+
+      connectButton.disabled = false;
+      connectButton.classList.remove('loading');
+    }
+  }
+
+  // Check token status on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    const statusBadge = document.getElementById('token-status');
+    const connectButton = document.querySelector('[onclick="fetchAndStoreToken()"]');
+
+    if (statusBadge && isAuthenticated()) {
+      statusBadge.textContent = 'API Connected ✓';
+      statusBadge.classList.add('badge-success');
+
+      if (connectButton) {
+        connectButton.textContent = 'API Connected';
+        connectButton.classList.remove('btn-secondary');
+        connectButton.classList.add('btn-success');
+      }
+    }
+  });
+</script>
 {% endblock %}

@@ -7,6 +7,6 @@ urlpatterns = [
     path("accounts/signup/", CustomSignupView.as_view(), name="account_signup"),
     path("accounts/", include("allauth.urls")),
     # path("accounts/mfa/", include("allauth.mfa.urls")),  # MFA disabled
+    path("api/", include("api.urls", namespace="api")),
     path("", include("core.urls", namespace="core")),
-    # path("api/", include("core.api_urls", namespace="core_api")),
 ]
