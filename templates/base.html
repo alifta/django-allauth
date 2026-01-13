@@ -5,18 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content=" 
-      {% block meta_description %}
-  
-      {% endblock %}" />
+      {% block meta_description %}{% endblock %}" />
       <meta name="referrer" content="strict-origin-when-cross-origin" />
 
       <title>
 
-        {% block title %}
-
-          Home In Block
-
-        {% endblock %}
+        {% block title %}Home In Block{% endblock %}
       </title>
 
       {% load static %}
@@ -51,9 +45,7 @@
       <!-- JWT Authentication Script -->
       <script src="{% static 'js/auth.js' %}" defer></script>
 
-      {% block extra_head %}
-
-      {% endblock %}
+      {% block extra_head %}{% endblock %}
     </head>
 
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -62,13 +54,9 @@
 
       <main id="main-content">
 
-        {% block content %}
-
-        {% endblock %}
+        {% block content %}{% endblock %}
       </main>
 
-      {% block extra_js %}
-
-      {% endblock %}
+      {% block extra_js %}{% endblock %}
     </body>
   </html>

@@ -103,26 +103,26 @@ uv run python manage.py makemigrations
 First setup (install dependencies):
 
 ```sh
-  bun install
+bun install
 ```
 
 Dependencies management:
 
 ```sh
-  bun add <package>
-  bun remove <package>
+bun add <package>
+bun remove <package>
 ```
 
 Build CSS (production):
 
 ```sh
-  bun run build-css
+bun run build-css
 ```
 
 Watch and rebuild CSS (development):
 
 ```sh
-  bun run watch-css
+bun run watch-css
 ```
 
 ## Linting
