@@ -20,40 +20,66 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+    # Django built-in apps
+    "django.contrib.admin",  # Admin interface for managing site content
+    "django.contrib.auth",  # Authentication framework (users, groups, permissions)
+    "django.contrib.contenttypes",  # Content types framework (generic relations)
+    "django.contrib.sessions",  # Session framework (user session management)
+    "django.contrib.messages",  # Messaging framework (one-time notifications)
+    "django.contrib.staticfiles",  # Static files handling (CSS, JS, images)
     # Local apps
-    "core",
-    "api",
+    "core",  # Core application with main business logic
+    "api",  # REST API application for external integrations
     # Third-party apps
-    "django_extensions",
-    "rest_framework",
-    "django_htmx",
-    "widget_tweaks",
-    "template_partials",
-    "corsheaders",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
-    "allauth.socialaccount.providers.github",
-    # "allauth.mfa",  # MFA disabled
+    "django_extensions",  # Additional Django management commands and utilities
+    "rest_framework",  # Django REST Framework for building RESTful APIs
+    "django_htmx",  # HTMX integration for Django (dynamic HTML interactions)
+    "widget_tweaks",  # Widget customization utilities for forms
+    "template_partials",  # Template partials support (reusable template fragments)
+    "corsheaders",  # CORS (Cross-Origin Resource Sharing) headers support
+    # django-allauth: Authentication and account management
+    "allauth",  # django-allauth main application
+    "allauth.account",  # Account management (signup, login, email verification)
+    "allauth.socialaccount",  # Social account providers framework
+    "allauth.socialaccount.providers.google",  # Google OAuth provider
+    "allauth.socialaccount.providers.github",  # GitHub OAuth provider
+    # "allauth.mfa",  # Multi-factor authentication (currently disabled)
+    # Profiling and debugging
+    "silk",  # Django Silk - SQL query and performance profiling tool
 ]
 
 MIDDLEWARE = [
+    # Security middleware (must be first)
+    # Handles security headers, SSL redirects, and other security-related features
     "django.middleware.security.SecurityMiddleware",
+    # Profiling middleware (must be early to capture all requests)
+    # Django Silk - profiles SQL queries and request/response data for performance analysis
+    "silk.middleware.SilkyMiddleware",
+    # Session middleware
+    # Manages user sessions (must be before any middleware that uses sessions)
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # CORS middleware
+    # Handles Cross-Origin Resource Sharing headers (must be before CommonMiddleware)
     "corsheaders.middleware.CorsMiddleware",
+    # Common middleware
+    # Handles URL rewriting, APPEND_SLASH, and other common functionality
     "django.middleware.common.CommonMiddleware",
+    # CSRF protection middleware
+    # Validates CSRF tokens for POST requests (must be after SessionMiddleware)
     "django.middleware.csrf.CsrfViewMiddleware",
+    # Authentication middleware
+    # Adds user attribute to request object (must be after SessionMiddleware)
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    # "core.middleware.MFARequiredMiddleware",  # MFA disabled
+    # MFA middleware (currently disabled)
+    # "core.middleware.MFARequiredMiddleware",  # Multi-factor authentication enforcement
+    # Messages middleware
+    # Handles one-time messages/flash messages (requires sessions and authentication)
     "django.contrib.messages.middleware.MessageMiddleware",
+    # Clickjacking protection middleware
+    # Sets X-Frame-Options header to prevent clickjacking attacks
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # django-allauth account middleware (should be last)
+    # Handles account-related functionality like email verification, account connections
     "allauth.account.middleware.AccountMiddleware",
 ]
 
