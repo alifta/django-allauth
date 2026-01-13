@@ -23,6 +23,7 @@ dependencies = [
 dev = [
     "djlint>=1.36.4",                                # Django template linter and formatter
     "ruff>=0.14.0",                                  # Fast Python linter and formatter
+    "django-silk>=5.1",                              # SQL query and performance profiling tool
 ]
 
 # Ruff
