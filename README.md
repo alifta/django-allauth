@@ -47,7 +47,7 @@ uv add <package-name>
 Add a development dependency:
 
 ```sh
-uv add --dev <package-name>
+uv add --group dev <package-name>
 ```
 
 Remove a dependency:
@@ -56,11 +56,23 @@ Remove a dependency:
 uv remove <package-name>
 ```
 
-Update all dependencies:
+### Updating Dependencies
+
+Update all dependencies and dev dependencies to latest compatible versions:
 
 ```sh
-uv sync --upgrade
+uv lock --upgrade          # Update lockfile to latest compatible versions
+uv sync --group dev        # Sync dependencies including dev group
 ```
+
+Update individual packages:
+
+```sh
+uv add --upgrade <package-name>              # Update specific package
+uv add --upgrade --group dev <package-name>  # Update dev dependency
+```
+
+**Note**: Your `pyproject.toml` uses minimum version constraints (e.g., `Django>=6.0`). The `uv.lock` file pins exact versions. When you run `uv lock --upgrade`, it updates the lockfile to the latest compatible versions within your constraints.
 
 ## Django Commands
 
