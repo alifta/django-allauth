@@ -1,8 +1,249 @@
-*.pyc
-__pycache__
-db.sqlite3
+# ============================================================================
+# .gitignore for Django + React Project
+# ============================================================================
+# This file specifies intentionally untracked files that Git should ignore.
+# Patterns are matched relative to the repository root.
+
+# ----------------------------------------------------------------------------
+# Project-specific files
+# ----------------------------------------------------------------------------
+# Temporary notes and scratch files
 notes*.txt
-uv.lock
+
+# ----------------------------------------------------------------------------
+# Django framework files
+# ----------------------------------------------------------------------------
+# Local settings override (contains secrets, should never be committed)
+local_settings.py
+
+# SQLite database files (development database)
+db.sqlite3
+db.sqlite3-journal
+
+# User-uploaded media files (should be handled by storage backend in production)
+media/
+
+# Django translation files (compiled from .po files)
+*.pot
+*.mo
+
+# ----------------------------------------------------------------------------
+# Python bytecode and cache files
+# ----------------------------------------------------------------------------
+# Python cache directories (created automatically by Python)
+__pycache__/
+*.py[cod]  # Compiled Python files (.pyc, .pyo, .pyd)
+*$py.class  # Jython compiled files
+
+# Python log files
+*.log
+
+# ----------------------------------------------------------------------------
+# Python compiled extensions
+# ----------------------------------------------------------------------------
+# Shared object files (C extensions)
+*.so
+
+# ----------------------------------------------------------------------------
+# Python build and distribution artifacts
+# ----------------------------------------------------------------------------
+# Python build artifacts
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+
+# Package metadata
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller files
+*.manifest
+*.spec
+
+# Package installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ----------------------------------------------------------------------------
+# Testing and coverage reports
+# ----------------------------------------------------------------------------
+# Coverage reports and test artifacts
+htmlcov/
+.tox/  # tox testing framework
+.nox/  # nox testing framework
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/  # Hypothesis testing framework
+.pytest_cache/  # pytest cache
+cover/
+
+# ----------------------------------------------------------------------------
+# Documentation builds
+# ----------------------------------------------------------------------------
+# Sphinx documentation builds
+docs/_build/
+/site  # mkdocs site output
+
+# ----------------------------------------------------------------------------
+# Jupyter Notebook and IPython
+# ----------------------------------------------------------------------------
+.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# ----------------------------------------------------------------------------
+# Python version management
+# ----------------------------------------------------------------------------
+# pyenv version file
+.python-version
+
+# ----------------------------------------------------------------------------
+# Dependency manager lockfiles
+# ----------------------------------------------------------------------------
+# Note: Some teams commit lockfiles for reproducible builds
+# Remove entries below if you want to track lockfiles in git
+uv.lock  # uv package manager lockfile
+Pipfile.lock  # pipenv lockfile
+poetry.lock  # poetry lockfile
+.pdm.toml  # PDM configuration
+__pypackages__/  # PEP 582 local packages
+
+# ----------------------------------------------------------------------------
+# Task queue files (Celery)
+# ----------------------------------------------------------------------------
+celerybeat-schedule
+celerybeat.pid
+
+# ----------------------------------------------------------------------------
+# Environment variables and virtual environments
+# ----------------------------------------------------------------------------
+# Environment variable files (contain secrets - NEVER commit these!)
+.env
+.env.local
+.env.*.local
+
+# Virtual environment directories
 .venv
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ----------------------------------------------------------------------------
+# IDE and editor files
+# ----------------------------------------------------------------------------
+# Spyder IDE
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# Sublime Text
+*.sublime*
+
+# ----------------------------------------------------------------------------
+# Type checking and static analysis
+# ----------------------------------------------------------------------------
+# mypy type checker cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ----------------------------------------------------------------------------
+# macOS system files
+# ----------------------------------------------------------------------------
+# macOS Finder metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon files
+Icon
+
+# Thumbnails
+._*
+
+# macOS system files
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# AFP (Apple Filing Protocol) directories
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# iCloud files
+*.icloud
+
+# ----------------------------------------------------------------------------
+# Node.js and frontend build artifacts
+# ----------------------------------------------------------------------------
+# Node.js dependencies (should be installed via npm/yarn/pnpm)
 node_modules/
-static/css/main.css
+
+# Bower components (legacy package manager)
+bower_components/
+
+# Log files
+logs
+
+# Backup files
+**/*.backup.*
+**/*.back.*
+
+# Design files
+psd
+thumb
+sketch
+
+# ----------------------------------------------------------------------------
+# Flask (if used)
+# ----------------------------------------------------------------------------
+instance/
+.webassets-cache
+
+# ----------------------------------------------------------------------------
+# Scrapy (if used)
+# ----------------------------------------------------------------------------
+.scrapy
+
+# ----------------------------------------------------------------------------
+# SageMath (if used)
+# ----------------------------------------------------------------------------
+*.sage.py
