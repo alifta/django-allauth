@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # Third-party apps
     "django_extensions",  # Additional Django management commands and utilities
     "rest_framework",  # Django REST Framework for building RESTful APIs
+    "ninja", # Ninja API framework
     "django_htmx",  # HTMX integration for Django (dynamic HTML interactions)
     "widget_tweaks",  # Widget customization utilities for forms
     "template_partials",  # Template partials support (reusable template fragments)

@@ -8,15 +8,16 @@ requires-python = ">=3.14"
 
 # Core runtime dependencies
 dependencies = [
-    "Django>=6.0",                                   # Web framework
-    "django-allauth[mfa,socialaccount]>=65.13",      # Authentication with MFA and social providers
-    "django-cors-headers>=4.9.0",                    # CORS headers support
-    "django-extensions>=4.1",                        # Additional Django management commands
-    "django-htmx>=1.27",                             # HTMX integration for Django
-    "django-template-partials>=25.3",                # Template partials support
-    "django-widget-tweaks>=1.5.1",                   # Widget customization utilities
-    "djangorestframework>=3.16",                     # REST API toolkit
-    "djangorestframework-simplejwt>=5.3",            # JWT token authentication
+    "Django>=6.0", # Web framework
+    "django-allauth[mfa,socialaccount]>=65.13", # Authentication with MFA and social providers
+    "django-cors-headers>=4.9.0", # CORS headers support
+    "django-extensions>=4.1", # Additional Django management commands
+    "django-htmx>=1.27",
+    "django-ninja>=1.5.3", # HTMX integration for Django
+    "django-template-partials>=25.3", # Template partials support
+    "django-widget-tweaks>=1.5.1", # Widget customization utilities
+    "djangorestframework>=3.16", # REST API toolkit
+    "djangorestframework-simplejwt>=5.3", # JWT token authentication
 ]
 
 [dependency-groups]
